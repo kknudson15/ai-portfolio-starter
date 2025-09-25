@@ -1,6 +1,6 @@
 // pages/api/ask.js
 import OpenAI from "openai";
-import projects from "../../data/knowledgeBase";
+import knowledgeBase from "../../data/knowledgeBase";
 import { initVectorStore, queryVectorStore } from "../../lib/vectorStore";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
     sessions[sessionId].count += 1;
 
     // ✅ guard for missing knowledgeBase
-    if (!projects || !Array.isArray(projects)) {
+    if (!knowledgeBase || !Array.isArray(knowledgeBase)) {
       return res.status(500).json({
         answer: "❌ Knowledge base is not available.",
         sources: [],
@@ -36,7 +36,7 @@ export default async function handler(req, res) {
     }
 
     // Init vector store
-    await initVectorStore(projects);
+    await initVectorStore(knowledgeBase);
 
     // Embed question
     const qEmbedding = await client.embeddings.create({

@@ -1,3 +1,4 @@
+// data/knowledgeBase.js
 import slugify from "../lib/slugify";
 
 const projects = [
@@ -120,4 +121,15 @@ const projects = [
   },
 ];
 
-export default projects;
+// ✅ Wrap into full knowledge base object
+const knowledgeBase = {
+  about:
+    "Kyle Knudson is a data engineering leader specializing in AI, cloud, and enterprise data systems. He has a track record of building high-performing teams and delivering transformative data platforms.",
+  leadership:
+    "Kyle has led data engineering teams at scale, focusing on AI/ML integrations, compliance-driven systems, and enterprise modernization. He is passionate about mentoring engineers and enabling organizations to succeed with AI.",
+  education:
+    "B.S. in Computer Science, with professional certifications in AI, cloud architecture, and leadership.",
+  projects, // 🔑 include your full projects array
+};
+
+export default knowledgeBase;
