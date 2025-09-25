@@ -5,7 +5,9 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/footer";
 import Link from "next/link";
 import slugify from "../lib/slugify";
-import projects from "../data/knowledgeBase";
+import knowledgeBase from "../../data/knowledgeBase";
+
+const projects = knowledgeBase.projects;
 
 const categories = ["All", "AI", "Software Engineering", "Cloud", "Leadership"];
 

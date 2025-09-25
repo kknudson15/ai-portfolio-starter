@@ -2,8 +2,11 @@ import { useRouter } from "next/router";
 import Nav from "@/components/Nav";
 import Footer from "@/components/footer";
 import { motion } from "framer-motion";
-import projects from "../../data/knowledgeBase"; // central source of projects
+import knowledgeBase from "../../data/knowledgeBase";
 import Link from "next/link";
+
+const projects = knowledgeBase.projects;
+
 
 export default function ProjectCaseStudy() {
   const router = useRouter();
