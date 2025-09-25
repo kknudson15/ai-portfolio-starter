@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #ffffff;
+  --muted: #6b7280;
+}
+
+html, body, #__next {
+  height: 100%;
+}
+
+body {
+  @apply bg-white text-gray-900 antialiased;
+  font-family: Inter, system-ui, -apple-system, 'Helvetica Neue', Arial;
+}
+
+/* subtle glass card */
+.glass {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* hero accent underline */
+.accent-underline {
+  display: inline-block;
+  height: 4px;
+  background: linear-gradient(90deg,var(--accent-color, #0071e3), rgba(0,0,0,0));
+  vertical-align: middle;
+  border-radius: 999px;
+}
+
+/* simple utility for subtle drop */
+.soft-shadow {
+  box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+}
