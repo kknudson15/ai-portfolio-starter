@@ -24,6 +24,20 @@ const publications = [
       "Discover how multi-agent crews powered by CrewAI can revolutionize data analysis. In this project, specialized agents handle ingestion, cleaning, analysis, insights, and presentation—working together like a collaborative team. By automating each step, businesses can transform raw data into executive-ready insights and presentations in minutes. Learn how this workflow not only streamlines analytics but also demonstrates the power of agentic AI in real-world scenarios",
     link: "https://medium.com/ai-in-plain-english/building-a-multi-agent-ai-crew-that-turns-data-into-decisions-eab08946678a",
   },
+  {
+    id: 4,
+    title: "Agentic AI for Self-Healing Data Pipelines: Reducing On-Call Load for Engineers",
+    description:
+      "How autonomous agents can monitor, detect, and fix ETL failures before they escalate",
+    link: "https://medium.com/ai-in-plain-english/agentic-ai-for-self-healing-data-pipelines-reducing-on-call-load-for-engineers-81a6146b4424",
+  },
+  {
+    id: 5,
+    title: "Google’s Agent2Agent Protocol: Unlocking Collaboration Between AI Agents",
+    description:
+    "Imagine a world where AI agents aren’t isolated silos, but can seamlessly talk to one another, delegate tasks, and collaborate to solve complex problems even if they were built by different teams, use different tools, or operate in different environments",
+    link: "https://medium.com/@kyle.knudson2015/googles-agent2agent-protocol-unlocking-collaboration-between-ai-agents-a591bc6db8df",
+  },
 ];
 
 export default function Publications() {
