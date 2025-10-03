@@ -38,6 +38,13 @@ const publications = [
     "Imagine a world where AI agents aren’t isolated silos, but can seamlessly talk to one another, delegate tasks, and collaborate to solve complex problems even if they were built by different teams, use different tools, or operate in different environments",
     link: "https://medium.com/@kyle.knudson2015/googles-agent2agent-protocol-unlocking-collaboration-between-ai-agents-a591bc6db8df",
   },
+  {
+    id: 6,
+    title: "Building an Enterprise-Ready AI Assistant with FastAPI + Streamlit",
+    description:
+    "It’s one thing to prototype an LLM-powered chatbot, it’s another to design a system that handles ingestion, retrieval, memory, feedback, and streaming responses in a way that scales",
+    link: "https://medium.com/towards-artificial-intelligence/building-an-enterprise-ready-ai-assistant-with-fastapi-streamlit-cda4cd33f192",
+  },
 ];
 
 export default function Publications() {
