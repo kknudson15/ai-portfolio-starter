@@ -10,6 +10,7 @@ export default function Nav() {
         AI Portfolio
       </span>
       <div className="flex items-center gap-4">
+        <Button variant="ghost" onClick={() => router.push('/apps')}>Apps</Button>
         <Button variant="ghost" onClick={() => router.push('/projects')}>Projects</Button>
         <Button variant="ghost" onClick={() => router.push('/resume')}>Resume</Button>
         <Button variant="ghost" onClick={() => router.push('/publications')}>Publications</Button>
