@@ -10,11 +10,20 @@ export const apps = [
   },
   {
     id: 'app-two',
-    name: 'Tether: Shared Safety',
-    description: 'Never lose the connection that matters most. Tether brings peace of mind to families with AI-driven geofencing, real-time SOS, and seamless Apple Watch monitoring',
+    name: 'ArtVault: Digital Heirloom',
+    description: 'From fridge art to fine art. ArtVault is the immersive museum for everyone. Organize your creative journey and share your private gallery with the world.',
     appStoreUrl: 'https://apps.apple.com/app/id987654321',
     supportUrl: '/support?app=app-two',
     privacyUrl: '/privacy?app=app-two',
+    icon: '/images/project2.png', // Placeholder icon
+  },
+  {
+    id: 'app-three',
+    name: 'Tether: Shared Safety',
+    description: 'Never lose the connection that matters most. Tether brings peace of mind to families with AI-driven geofencing, real-time SOS, and seamless Apple Watch monitoring',
+    appStoreUrl: 'https://apps.apple.com/app/id987654321',
+    supportUrl: '/support?app=app-three',
+    privacyUrl: '/privacy?app=app-three',
     icon: '/images/project2.png', // Placeholder icon
   }
 ];
