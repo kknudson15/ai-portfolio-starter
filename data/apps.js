@@ -3,10 +3,10 @@ export const apps = [
     id: 'app-one',
     name: 'TinyTalks: Kid\'s Flashcards',
     description: 'Connect your child to their heritage with voices they love. TinyTalks makes language learning magical with family recordings, 3D sensory play, and effortless iCloud sync',
-    appStoreUrl: 'https://apps.apple.com/app/id123456789',
+    appStoreUrl: 'https://apps.apple.com/us/app/tinytalks-kids-flashcards/id6757399001',
     supportUrl: '/support?app=app-one',
     privacyUrl: '/privacy?app=app-one',
-    icon: '/images/project1.png', // Placeholder icon
+    icon: '/images/TinyTalksIcon.png',
   },
   {
     id: 'app-two',
@@ -15,7 +15,7 @@ export const apps = [
     appStoreUrl: 'https://apps.apple.com/app/id987654321',
     supportUrl: '/support?app=app-two',
     privacyUrl: '/privacy?app=app-two',
-    icon: '/images/project2.png', // Placeholder icon
+    icon: '/images/ArtVaultIcon.png',
   },
   {
     id: 'app-three',
