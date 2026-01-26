@@ -5,6 +5,12 @@
 :root {
   --bg: #ffffff;
   --muted: #6b7280;
+  --accent-color: #0071e3;
+}
+
+.dark {
+  --bg: #111827;
+  --muted: #9ca3af;
 }
 
 html, body, #__next {
@@ -12,28 +18,101 @@ html, body, #__next {
 }
 
 body {
-  @apply bg-white text-gray-900 antialiased;
+  @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased transition-colors duration-300;
   font-family: Inter, system-ui, -apple-system, 'Helvetica Neue', Arial;
 }
 
-/* subtle glass card */
+/* Glass card effect */
 .glass {
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(8px) saturate(120%);
-  -webkit-backdrop-filter: blur(8px) saturate(120%);
-  border: 1px solid rgba(0,0,0,0.06);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* hero accent underline */
+.dark .glass {
+  background: rgba(31, 41, 55, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Hero accent underline */
 .accent-underline {
   display: inline-block;
   height: 4px;
-  background: linear-gradient(90deg,var(--accent-color, #0071e3), rgba(0,0,0,0));
+  background: linear-gradient(90deg, var(--accent-color), rgba(0, 0, 0, 0));
   vertical-align: middle;
   border-radius: 999px;
 }
 
-/* simple utility for subtle drop */
+/* Soft shadow utility */
 .soft-shadow {
-  box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08);
+}
+
+.dark .soft-shadow {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Gradient backgrounds for dark mode */
+.dark .bg-gradient-to-br {
+  opacity: 0.6;
+}
+
+/* Card hover states */
+.card-hover {
+  @apply transition-all duration-300 ease-out;
+}
+
+.card-hover:hover {
+  @apply shadow-xl scale-[1.02];
+}
+
+/* Text colors for dark mode compatibility */
+.text-gray-600 {
+  @apply dark:text-gray-400;
+}
+
+.text-gray-700 {
+  @apply dark:text-gray-300;
+}
+
+/* Button adjustments for dark mode */
+.bg-white\/60 {
+  @apply dark:bg-gray-800/60;
+}
+
+.bg-white\/70 {
+  @apply dark:bg-gray-800/70;
+}
+
+/* Modal backgrounds */
+.bg-black\/50 {
+  @apply dark:bg-black/70;
+}
+
+/* Form elements */
+input, select {
+  @apply dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100;
+}
+
+input:focus, select:focus {
+  @apply dark:ring-blue-500 dark:border-blue-500;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
 }
