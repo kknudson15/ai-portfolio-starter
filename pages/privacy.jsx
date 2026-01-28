@@ -51,8 +51,8 @@ export default function PrivacyPage() {
                                 key={app.id}
                                 onClick={() => setSelectedApp(app)}
                                 className={`px-6 py-2 rounded-full transition-all border ${selectedApp?.id === app.id
-                                        ? 'bg-black text-white border-black shadow-md'
-                                        : 'bg-white/50 text-gray-700 border-gray-200 hover:bg-white'
+                                    ? 'bg-black text-white border-black shadow-md'
+                                    : 'bg-white/50 text-gray-700 border-gray-200 hover:bg-white'
                                     }`}
                             >
                                 {app.name}
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
 
                                 <h3 className="text-xl font-semibold mb-3">3. Third-Party Services</h3>
                                 <p className="mb-6">
-                                    The app may use Apple standard services (like iCloud for synchronization if enabled). These services are governed by Apple's own privacy policy.
+                                    The app may use Apple standard services (like iCloud for synchronization if enabled). These services are governed by Apple&apos;s own privacy policy.
                                 </p>
 
                                 <h3 className="text-xl font-semibold mb-3">4. Changes to This Policy</h3>

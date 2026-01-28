@@ -3,6 +3,7 @@ import { ThemeProvider } from '@/lib/ThemeContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import '@/styles/globals.css';
+import SEO from '@/components/SEO';
 
 // Page transition variants
 const pageVariants = {
@@ -33,6 +34,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider>
+      <SEO />
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={router.asPath}

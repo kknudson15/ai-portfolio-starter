@@ -70,7 +70,7 @@ export default function Custom404() {
                     transition={{ duration: 0.6, delay: 0.3 }}
                     className="text-white/80 text-lg max-w-md mb-8"
                 >
-                    The page you're looking for seems to have wandered off into the digital cosmos. Let's get you back on track.
+                    The page you&apos;re looking for seems to have wandered off into the digital cosmos. Let&apos;s get you back on track.
                 </motion.p>
 
                 <motion.div

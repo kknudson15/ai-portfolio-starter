@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Nav from "@/components/Nav";
 import Footer from "@/components/footer";
 import Link from "next/link";
-import slugify from "../lib/slugify";
 import knowledgeBase from "../data/knowledgeBase";
 
 const projects = knowledgeBase.projects;
@@ -22,8 +21,8 @@ export default function Projects() {
     activeCategory === "All"
       ? projects.filter((p) => !p.featured)
       : projects.filter(
-          (p) => p.categories.includes(activeCategory) && !p.featured
-        );
+        (p) => p.categories.includes(activeCategory) && !p.featured
+      );
 
   filteredProjects = filteredProjects.sort((a, b) =>
     sortOrder === "Newest"
@@ -92,11 +91,10 @@ export default function Projects() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 rounded-full transition ${
-                  activeCategory === cat
+                className={`px-4 py-2 rounded-full transition ${activeCategory === cat
                     ? "bg-[#0071e3] text-white shadow-md"
                     : "bg-white/60 text-gray-700 hover:bg-gray-100"
-                }`}
+                  }`}
               >
                 {cat}
               </button>

@@ -28,7 +28,7 @@ export default function AppsPage() {
                 >
                     <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">My Apps</h1>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Discover the apps I've built and published to the App Store.
+                        Discover the apps I&apos;ve built and published to the App Store.
                     </p>
                 </motion.div>
 

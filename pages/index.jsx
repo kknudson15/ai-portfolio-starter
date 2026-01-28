@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
+import SEO from '@/components/SEO';
 import Nav from '@/components/Nav';
 import Footer from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import knowledgeBase from '@/data/knowledgeBase';
 import Link from 'next/link';
-import Image from 'next/image';
+import Avatar from '@/components/ui/Avatar';
 
 // Get featured projects from the centralized knowledge base
 const featuredProjects = knowledgeBase.projects.filter((p) => p.featured);
@@ -14,7 +15,8 @@ export default function Home() {
   const [selectedProject, setSelectedProject] = useState(null);
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center transition-colors duration-500 relative overflow-hidden">
+    <main className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300 overflow-hidden">
+      <SEO />
       {/* Nav */}
       <Nav />
 
@@ -76,9 +78,7 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8 items-center">
             {/* Photo Placeholder */}
             <div className="flex justify-center">
-              <div className="w-48 h-48 rounded-full bg-gradient-to-br from-[#0071e3] to-[#00c6fb] flex items-center justify-center shadow-xl">
-                <span className="text-6xl font-bold text-white">KK</span>
-              </div>
+              <Avatar size="lg" />
             </div>
 
             {/* Bio Content */}
@@ -152,43 +152,57 @@ export default function Home() {
         </motion.h2>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {featuredProjects.map((project) => (
+          {featuredProjects.map((project, index) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 40, rotateX: -10 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="glass rounded-2xl overflow-hidden shadow-md hover:shadow-xl transform hover:scale-[1.01] transition duration-300 cursor-pointer"
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{
+                scale: 1.03,
+                y: -8,
+                rotateY: 2,
+                transition: { type: 'spring', stiffness: 300 }
+              }}
+              className="group glass rounded-2xl overflow-hidden shadow-md hover:shadow-2xl cursor-pointer perspective-1000"
               onClick={() => setSelectedProject(project)}
+              style={{ transformStyle: 'preserve-3d' }}
             >
               <motion.div
-                className="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center"
-                whileHover={{ scale: 1.05, rotate: 1 }}
-                transition={{ type: 'spring', stiffness: 300 }}
+                className="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.4 }}
               >
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="h-full w-full object-cover rounded-lg"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
                 />
+                {/* Overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </motion.div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-[#0071e3] dark:group-hover:text-[#5ac8fa] transition-colors">
                   {project.title}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 line-clamp-2">
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-4">
-                  {project.categories.map((cat) => (
-                    <span
+                  {project.categories.map((cat, i) => (
+                    <motion.span
                       key={cat}
-                      className="px-3 py-1 bg-[#f1f5f9] dark:bg-gray-700 rounded-full text-xs text-gray-700 dark:text-gray-300"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 + i * 0.05 }}
+                      whileHover={{ scale: 1.1 }}
+                      className="px-3 py-1 bg-gradient-to-r from-[#0071e3]/10 to-[#5856d6]/10 dark:from-[#0071e3]/20 dark:to-[#5856d6]/20 rounded-full text-xs font-medium text-[#0071e3] dark:text-[#5ac8fa] border border-[#0071e3]/20 dark:border-[#5ac8fa]/20"
                     >
                       {cat}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               </div>

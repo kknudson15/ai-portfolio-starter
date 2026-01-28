@@ -68,6 +68,7 @@ export default function Contact() {
       setSubmitStatus('success');
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
+      console.error(error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -114,8 +115,8 @@ export default function Contact() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               className={`mb-6 p-4 rounded-xl flex items-center gap-3 ${submitStatus === 'success'
-                  ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
-                  : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
+                ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
+                : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
                 }`}
             >
               {submitStatus === 'success' ? (
@@ -160,8 +161,8 @@ export default function Contact() {
               value={formData.name}
               onChange={handleChange}
               className={`w-full p-4 rounded-xl border-2 transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#0071e3] ${errors.name
-                  ? 'border-red-400 dark:border-red-500'
-                  : 'border-gray-200 dark:border-gray-600'
+                ? 'border-red-400 dark:border-red-500'
+                : 'border-gray-200 dark:border-gray-600'
                 }`}
             />
             <AnimatePresence>
@@ -192,8 +193,8 @@ export default function Contact() {
               value={formData.email}
               onChange={handleChange}
               className={`w-full p-4 rounded-xl border-2 transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#0071e3] ${errors.email
-                  ? 'border-red-400 dark:border-red-500'
-                  : 'border-gray-200 dark:border-gray-600'
+                ? 'border-red-400 dark:border-red-500'
+                : 'border-gray-200 dark:border-gray-600'
                 }`}
             />
             <AnimatePresence>
@@ -224,8 +225,8 @@ export default function Contact() {
               onChange={handleChange}
               rows={5}
               className={`w-full p-4 rounded-xl border-2 transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#0071e3] resize-none ${errors.message
-                  ? 'border-red-400 dark:border-red-500'
-                  : 'border-gray-200 dark:border-gray-600'
+                ? 'border-red-400 dark:border-red-500'
+                : 'border-gray-200 dark:border-gray-600'
                 }`}
             />
             <AnimatePresence>

@@ -84,7 +84,7 @@ export default function SupportPage() {
                                     </div>
                                     <div>
                                         <p className="font-bold text-black">How do I request a feature?</p>
-                                        <p>We love feedback! Tell us what you'd like to see in the next update using the form below.</p>
+                                        <p>We love feedback! Tell us what you&apos;d like to see in the next update using the form below.</p>
                                     </div>
                                 </div>
 
