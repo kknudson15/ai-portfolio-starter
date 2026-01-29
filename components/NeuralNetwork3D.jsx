@@ -1,7 +1,7 @@
-```javascript
 import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
+import { useReducedMotion } from 'framer-motion';
 import * as THREE from 'three';
 
 function BrainParticles({ count = 100, scrollYProgress }) {
@@ -156,4 +156,3 @@ export default function NeuralNetwork3D({ scrollYProgress }) {
         </div>
     );
 }
-```

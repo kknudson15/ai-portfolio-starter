@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, Sparkles, Brain, CheckCircle, AlertCircle } from 'lucide-react';
+import { Loader2, Sparkles, Brain, CheckCircle } from 'lucide-react';
 
 export default function AIPlayground() {
     const [input, setInput] = useState('');
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const [ready, setReady] = useState(false);
     const workerRef = useRef(null);
 
@@ -17,14 +16,14 @@ export default function AIPlayground() {
             workerRef.current = new Worker(new URL('../lib/ai-worker.js', import.meta.url));
 
             workerRef.current.onmessage = (event) => {
-                const { status, output, error } = event.data;
+                const { status, output, error: workerError } = event.data;
                 if (status === 'ready') {
                     setReady(true);
                 } else if (status === 'complete') {
                     setResult(output);
                     setLoading(false);
                 } else if (status === 'error') {
-                    setError(error);
+                    console.error('AI Worker error:', workerError);
                     setLoading(false);
                 }
             };
@@ -41,7 +40,6 @@ export default function AIPlayground() {
     const analyze = () => {
         if (!input.trim()) return;
         setLoading(true);
-        setError(null);
         setResult(null);
         workerRef.current.postMessage({ type: 'classify', text: input });
     };
@@ -116,8 +114,8 @@ export default function AIPlayground() {
                                     className="overflow-hidden"
                                 >
                                     <div className={`mt-6 p-6 rounded-2xl border ${result[0].label === 'POSITIVE'
-                                            ? 'bg-green-50/50 dark:bg-green-900/20 border-green-200 dark:border-green-800'
-                                            : 'bg-red-50/50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
+                                        ? 'bg-green-50/50 dark:bg-green-900/20 border-green-200 dark:border-green-800'
+                                        : 'bg-red-50/50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
                                         }`}>
                                         <div className="flex items-center gap-4">
                                             <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${result[0].label === 'POSITIVE' ? 'bg-green-100 dark:bg-green-800' : 'bg-red-100 dark:bg-red-800'
