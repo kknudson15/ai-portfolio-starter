@@ -3,6 +3,9 @@ import Footer from "@/components/footer";
 import { motion } from "framer-motion";
 import { Cpu, Database, Bot, Zap, Network, Sparkles } from "lucide-react";
 import SEO from '@/components/SEO';
+import dynamic from 'next/dynamic';
+
+const NeuralNetwork3D = dynamic(() => import('@/components/NeuralNetwork3D'), { ssr: false });
 
 const publications = [
   {
@@ -61,58 +64,33 @@ const publications = [
   },
 ];
 
-// Card tilt effect hook
-const cardVariants = {
-  rest: {
-    scale: 1,
-    rotateX: 0,
-    rotateY: 0,
-    transition: { duration: 0.3, ease: "easeOut" }
-  },
-  hover: {
-    scale: 1.02,
-    transition: { duration: 0.3, ease: "easeOut" }
-  }
-};
-
 export default function Publications() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+    <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-slate-50 dark:bg-[#0f172a]">
       <SEO
         title="Publications"
         description="Technical articles and insights on AI, Data Engineering, and Enterprise Systems by Kyle Knudson."
       />
       <Nav />
+      <div className="noise-overlay" />
+      <NeuralNetwork3D />
 
-      {/* Background */}
-      <motion.div
-        className="absolute inset-0 -z-20 bg-gradient-to-br from-[#c2e9fb] via-[#a1c4fd] to-[#d4fc79] dark:from-[#1a1a2e] dark:via-[#16213e] dark:to-[#0f3460]"
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 200, repeat: Infinity, ease: "linear" }}
-      />
-
-      <section className="w-full max-w-6xl px-6 py-20 z-10">
-        <motion.h2
+      <section className="w-full max-w-6xl px-6 py-32 z-10">
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-900 dark:text-white"
+          className="text-center mb-20"
         >
-          Publications
-        </motion.h2>
+          <h2 className="text-4xl md:text-6xl font-black mb-4 font-outfit text-slate-900 dark:text-white tracking-tight">
+            Publications
+          </h2>
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium">
+            Technical articles on AI, data engineering, and enterprise systems
+          </p>
+        </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-center text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto"
-        >
-          Technical articles on AI, data engineering, and enterprise systems
-        </motion.p>
-
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
           {publications.map((pub, i) => (
             <motion.a
               key={pub.id}
@@ -123,62 +101,25 @@ export default function Publications() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              variants={cardVariants}
-              whileHover="hover"
-              className="group block glass rounded-2xl shadow-lg overflow-hidden cursor-pointer"
+              whileHover={{ y: -10 }}
+              className="group block bg-white/70 dark:bg-slate-800/40 backdrop-blur-xl rounded-[2rem] shadow-2xl overflow-hidden border border-white/20 dark:border-white/10 hover:border-blue-500/50 transition-all duration-500"
             >
-              {/* Thumbnail with gradient and icon */}
-              <div className={`h-40 bg-gradient-to-br ${pub.gradient} relative flex items-center justify-center overflow-hidden`}>
-                <motion.div
-                  className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-300"
-                />
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <pub.icon className="w-16 h-16 text-white/80 group-hover:text-white transition-colors" />
-                </motion.div>
-
-                {/* Floating particles */}
-                {[...Array(3)].map((_, j) => (
-                  <motion.div
-                    key={j}
-                    className="absolute w-2 h-2 bg-white/30 rounded-full"
-                    style={{
-                      top: `${20 + j * 25}%`,
-                      left: `${15 + j * 30}%`,
-                    }}
-                    animate={{
-                      y: [0, -10, 0],
-                      opacity: [0.3, 0.7, 0.3],
-                    }}
-                    transition={{
-                      duration: 2 + j,
-                      repeat: Infinity,
-                      delay: j * 0.3,
-                    }}
-                  />
-                ))}
+              <div className={`h-48 bg-gradient-to-br ${pub.gradient} relative flex items-center justify-center overflow-hidden`}>
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
+                <pub.icon className="w-20 h-20 text-white shadow-2xl" />
               </div>
 
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-[#0071e3] dark:group-hover:text-[#5ac8fa] transition-colors line-clamp-2">
+              <div className="p-10">
+                <h3 className="text-2xl font-bold mb-4 font-outfit text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors line-clamp-2">
                   {pub.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
+                <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 line-clamp-3 leading-relaxed">
                   {pub.description}
                 </p>
 
-                {/* Read more with underline animation */}
-                <motion.span
-                  className="inline-block mt-4 text-sm font-medium text-[#0071e3] dark:text-[#5ac8fa] relative"
-                >
-                  Read on Medium →
-                  <motion.span
-                    className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#0071e3] dark:bg-[#5ac8fa] group-hover:w-full transition-all duration-300"
-                  />
-                </motion.span>
+                <div className="flex items-center text-blue-500 font-black uppercase tracking-widest text-xs group-hover:translate-x-2 transition-transform duration-300">
+                  Read on Medium <span className="ml-2">→</span>
+                </div>
               </div>
             </motion.a>
           ))}

@@ -35,26 +35,41 @@ export default function Nav() {
         </span>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-4">
-          {navLinks.map((link) => (
-            <Button
-              key={link.href}
-              variant="ghost"
-              className="text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
-              onClick={() => handleNavClick(link.href)}
-            >
-              {link.label}
-            </Button>
-          ))}
+        <div className="hidden md:flex items-center gap-1 relative">
+          {navLinks.map((link) => {
+            const isActive = router.pathname === link.href;
+            return (
+              <Button
+                key={link.href}
+                variant="ghost"
+                className={`relative px-4 py-2 text-sm font-medium transition-colors ${isActive
+                    ? 'text-[#0071e3] dark:text-[#5ac8fa]'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                onClick={() => handleNavClick(link.href)}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="nav-pill"
+                    className="absolute inset-0 bg-blue-500/10 dark:bg-blue-500/20 rounded-full -z-10"
+                    transition={{ type: 'spring', bounce: 0.25, duration: 0.5 }}
+                  />
+                )}
+                {link.label}
+              </Button>
+            );
+          })}
 
-          {/* Dark Mode Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-            aria-label="Toggle dark mode"
-          >
-            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-          </button>
+          <div className="ml-4 pl-4 border-l border-slate-200 dark:border-slate-700 h-6 flex items-center">
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+              aria-label="Toggle dark mode"
+            >
+              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu Button */}

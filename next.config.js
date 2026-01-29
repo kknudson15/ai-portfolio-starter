@@ -11,8 +11,6 @@ const nextConfig = {
   },
   // Enable compression
   compress: true,
-  // Optimize for production
-  swcMinify: true,
 };
 
 module.exports = nextConfig;

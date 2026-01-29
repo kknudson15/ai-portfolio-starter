@@ -4,6 +4,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import '@/styles/globals.css';
 import SEO from '@/components/SEO';
+import { Outfit, Inter } from 'next/font/google';
+
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 // Page transition variants
 const pageVariants = {
@@ -34,19 +38,21 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider>
-      <SEO />
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={router.asPath}
-          variants={pageVariants}
-          initial="initial"
-          animate="enter"
-          exit="exit"
-        >
-          <Component {...pageProps} />
-        </motion.div>
-      </AnimatePresence>
-      <ChatWidget />
+      <div className={`${outfit.variable} ${inter.variable} font-sans`}>
+        <SEO />
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={router.asPath}
+            variants={pageVariants}
+            initial="initial"
+            animate="enter"
+            exit="exit"
+          >
+            <Component {...pageProps} />
+          </motion.div>
+        </AnimatePresence>
+        <ChatWidget />
+      </div>
     </ThemeProvider>
   );
 }
