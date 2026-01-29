@@ -81,8 +81,16 @@ h6 {
 .text-gradient {
   background: linear-gradient(135deg, #0071e3 0%, #00c6ff 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  /* Fallback */
+  display: inline-block;
+  /* Fix for box-decoration-break/clipping */
+  padding-bottom: 0.1em;
+  /* Prevent descender clipping */
+  margin-bottom: -0.1em;
+  /* Compensate for padding */
 }
 
 .dark .text-gradient {

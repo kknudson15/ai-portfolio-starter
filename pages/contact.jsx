@@ -3,10 +3,7 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/footer';
 import { useState } from 'react';
 import { Send, CheckCircle, AlertCircle, Loader2, Mail, User, MessageSquare } from 'lucide-react';
-import dynamic from 'next/dynamic';
 import SEO from '@/components/SEO';
-
-const NeuralNetwork3D = dynamic(() => import('@/components/NeuralNetwork3D'), { ssr: false });
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -66,7 +63,6 @@ export default function Contact() {
       />
       <Nav />
       <div className="noise-overlay" />
-      <NeuralNetwork3D />
 
       <section className="w-full max-w-5xl px-6 py-32 z-10 flex flex-col items-center">
         <motion.div

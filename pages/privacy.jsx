@@ -4,10 +4,7 @@ import Footer from '@/components/footer';
 import { apps } from '@/data/apps';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
 import SEO from '@/components/SEO';
-
-const NeuralNetwork3D = dynamic(() => import('@/components/NeuralNetwork3D'), { ssr: false });
 
 export default function PrivacyPage() {
     const router = useRouter();
@@ -31,9 +28,6 @@ export default function PrivacyPage() {
             />
             <Nav />
             <div className="noise-overlay" />
-
-            {/* Background */}
-            <NeuralNetwork3D />
 
             <section className="flex-grow flex flex-col items-center pt-32 pb-24 px-6 z-10">
                 <div className="max-w-4xl w-full">

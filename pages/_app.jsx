@@ -5,9 +5,12 @@ import { useRouter } from 'next/router';
 import '@/styles/globals.css';
 import SEO from '@/components/SEO';
 import { Outfit, Inter } from 'next/font/google';
+import dynamic from 'next/dynamic';
 
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+
+const NeuralNetwork3D = dynamic(() => import('@/components/NeuralNetwork3D'), { ssr: false });
 
 // Page transition variants
 const pageVariants = {
@@ -40,6 +43,7 @@ function MyApp({ Component, pageProps }) {
     <ThemeProvider>
       <div className={`${outfit.variable} ${inter.variable} font-sans`}>
         <SEO />
+        <NeuralNetwork3D />
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={router.asPath}

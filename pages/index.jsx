@@ -1,4 +1,4 @@
-import { motion, useScroll, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import SEO from '@/components/SEO';
 import Nav from '@/components/Nav';
 import Footer from '@/components/footer';
@@ -12,7 +12,6 @@ import { ExternalLink } from 'lucide-react';
 import Tilt from 'react-parallax-tilt';
 
 // Dynamic imports to prevent SSR issues with Canvas and Workers
-const NeuralNetwork3D = dynamic(() => import('@/components/NeuralNetwork3D'), { ssr: false });
 const AIPlayground = dynamic(() => import('@/components/AIPlayground'), { ssr: false });
 
 // Get featured projects from the centralized knowledge base
@@ -21,7 +20,6 @@ const featuredProjects = knowledgeBase.projects.filter((p) => p.featured);
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState(null);
   const cardsRef = useRef([]);
-  const { scrollYProgress } = useScroll();
   const shouldReduceMotion = useReducedMotion();
 
   // Spotlight Effect Logic - DISABLE if reduced motion
@@ -51,9 +49,6 @@ export default function Home() {
 
       {/* Nav */}
       <Nav />
-
-      {/* 3D Neural Network Hero Background with Scroll Prop */}
-      <NeuralNetwork3D scrollYProgress={scrollYProgress} />
 
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center min-h-[90vh] pt-32 px-6 z-10 relative">

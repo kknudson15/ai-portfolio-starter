@@ -5,9 +5,6 @@ import Footer from '@/components/footer';
 import { Cloud, Cpu, Code2, Briefcase, GraduationCap, Award, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import SEO from '@/components/SEO';
-import dynamic from 'next/dynamic';
-
-const NeuralNetwork3D = dynamic(() => import('@/components/NeuralNetwork3D'), { ssr: false });
 
 // Timeline data
 const timeline = [
@@ -196,7 +193,6 @@ export default function Resume() {
       />
       <Nav />
       <div className="noise-overlay" />
-      <NeuralNetwork3D />
 
       <section className="w-full max-w-5xl px-6 py-32 z-10 space-y-24">
         {/* Header */}

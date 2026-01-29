@@ -4,9 +4,6 @@ import Footer from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { apps } from '@/data/apps';
 import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
-
-const NeuralNetwork3D = dynamic(() => import('@/components/NeuralNetwork3D'), { ssr: false });
 
 export default function AppsPage() {
     const router = useRouter();
@@ -15,9 +12,6 @@ export default function AppsPage() {
         <main className="min-h-screen flex flex-col transition-colors duration-500 relative overflow-hidden bg-slate-50 dark:bg-[#0f172a]">
             <Nav />
             <div className="noise-overlay" />
-
-            {/* Background */}
-            <NeuralNetwork3D />
 
             <section className="flex-grow flex flex-col items-center pt-32 pb-24 px-6 z-10">
                 <motion.div

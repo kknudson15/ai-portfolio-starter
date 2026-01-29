@@ -1,12 +1,13 @@
 import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
-import { useReducedMotion } from 'framer-motion';
+import { useReducedMotion, useScroll } from 'framer-motion';
 import * as THREE from 'three';
 
-function BrainParticles({ count = 100, scrollYProgress }) {
+function BrainParticles({ count = 100 }) {
     const points = useRef();
     const materialRef = useRef();
+    const { scrollYProgress } = useScroll();
 
     // Generate random particles
     const particles = useMemo(() => {
@@ -118,12 +119,12 @@ function BrainParticles({ count = 100, scrollYProgress }) {
     );
 }
 
-function Scene({ scrollYProgress }) {
+function Scene() {
     return (
         <>
             <ambientLight intensity={0.5} />
             <pointLight position={[10, 10, 10]} intensity={1} color="#0071e3" />
-            <BrainParticles count={80} scrollYProgress={scrollYProgress} />
+            <BrainParticles count={80} />
             <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
             {/* Fog for depth */}
             <fog attach="fog" args={['#0f172a', 10, 25]} />
@@ -131,17 +132,17 @@ function Scene({ scrollYProgress }) {
     );
 }
 
-export default function NeuralNetwork3D({ scrollYProgress }) {
+export default function NeuralNetwork3D() {
     const shouldReduceMotion = useReducedMotion();
 
     return (
-        <div className="absolute inset-0 -z-10 w-full h-full opacity-60">
+        <div className="fixed inset-0 -z-10 w-full h-full opacity-60 pointer-events-none">
             <Canvas
                 camera={{ position: [0, 0, 15], fov: 60 }}
                 dpr={[1, 2]} // Optimize for high DPI screens
                 gl={{ antialias: true, alpha: true }}
             >
-                <Scene scrollYProgress={scrollYProgress} />
+                <Scene />
                 {!shouldReduceMotion && (
                     <OrbitControls
                         enableZoom={false}

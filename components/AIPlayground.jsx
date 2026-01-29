@@ -12,24 +12,34 @@ export default function AIPlayground() {
     // Initialize Web Worker for AI
     useEffect(() => {
         if (!workerRef.current) {
-            // Create a web worker to run the model off the main thread
-            workerRef.current = new Worker(new URL('../lib/ai-worker.js', import.meta.url));
+            try {
+                // Create a web worker to run the model off the main thread
+                workerRef.current = new Worker(new URL('../lib/ai-worker.js', import.meta.url));
 
-            workerRef.current.onmessage = (event) => {
-                const { status, output, error: workerError } = event.data;
-                if (status === 'ready') {
-                    setReady(true);
-                } else if (status === 'complete') {
-                    setResult(output);
+                workerRef.current.onerror = (err) => {
+                    console.error("Worker connection failed:", err);
                     setLoading(false);
-                } else if (status === 'error') {
-                    console.error('AI Worker error:', workerError);
-                    setLoading(false);
-                }
-            };
+                };
 
-            // Trigger load
-            workerRef.current.postMessage({ type: 'load' });
+                workerRef.current.onmessage = (event) => {
+                    const { status, output, error: workerError } = event.data;
+                    if (status === 'ready') {
+                        setReady(true);
+                        setLoading(false);
+                    } else if (status === 'complete') {
+                        setResult(output);
+                        setLoading(false);
+                    } else if (status === 'error') {
+                        console.error('AI Worker error:', workerError);
+                        setLoading(false);
+                    }
+                };
+
+                // Trigger load
+                workerRef.current.postMessage({ type: 'load' });
+            } catch (err) {
+                console.error("Failed to initialize worker:", err);
+            }
         }
 
         return () => {
