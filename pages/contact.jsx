@@ -56,7 +56,7 @@ export default function Contact() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-slate-50 dark:bg-[#0f172a]">
+    <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
       <SEO
         title="Contact"
         description="Get in touch with Kyle Knudson for collaboration or inquiries."

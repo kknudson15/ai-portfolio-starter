@@ -186,7 +186,7 @@ function TimelineItem({ item, index, isLast }) {
 
 export default function Resume() {
   return (
-    <main className="min-h-screen flex flex-col items-center relative overflow-hidden bg-slate-50 dark:bg-[#0f172a]">
+    <main className="min-h-screen flex flex-col items-center relative overflow-hidden">
       <SEO
         title="Resume"
         description="Experience and skills of Kyle Knudson - Data Engineering Leader specialized in AI."

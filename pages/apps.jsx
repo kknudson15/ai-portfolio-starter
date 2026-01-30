@@ -9,7 +9,7 @@ export default function AppsPage() {
     const router = useRouter();
 
     return (
-        <main className="min-h-screen flex flex-col transition-colors duration-500 relative overflow-hidden bg-slate-50 dark:bg-[#0f172a]">
+        <main className="min-h-screen flex flex-col transition-colors duration-500 relative overflow-hidden">
             <Nav />
             <div className="noise-overlay" />
 

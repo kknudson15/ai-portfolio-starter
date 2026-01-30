@@ -34,12 +34,24 @@ export default function Projects() {
     <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
       <Nav />
 
-      {/* Background */}
-      <motion.div
-        className="absolute inset-0 -z-20 bg-gradient-to-br from-[#ff9a9e] via-[#fad0c4] to-[#a1c4fd]"
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
-      />
+      {/* Background - Removed explicit gradient to let global neural network show, or keep if intended. 
+          The user wanted neural network everywhere. 
+          The projects page currently has: 
+          <motion.div className="absolute inset-0 -z-20 bg-gradient-to-br from-[#ff9a9e] via-[#fad0c4] to-[#a1c4fd]" ... />
+          This gradient likely covers the neural network. I should probably comment it out or make it transparent. 
+          for now, I will just remove the main tag's background if it had one (it didn't seem to have one in the view_file, but better safe).
+          
+          Actually, checking the file content from step 72:
+          34:     <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+          
+          It doesn't have a background class on main!
+          But it DOES have a motion.div absolute background (lines 38-42).
+          
+          38:       <motion.div
+          39:         className="absolute inset-0 -z-20 bg-gradient-to-br from-[#ff9a9e] via-[#fad0c4] to-[#a1c4fd]"
+          
+          This will cover the global neural network. I should disable this to respect the user's "neural net background like the rest of the pages" request.
+      */}
 
       <section className="w-full max-w-6xl px-6 py-20 z-10">
         <motion.h2
@@ -92,8 +104,8 @@ export default function Projects() {
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 rounded-full transition ${activeCategory === cat
-                    ? "bg-[#0071e3] text-white shadow-md"
-                    : "bg-white/60 text-gray-700 hover:bg-gray-100"
+                  ? "bg-[#0071e3] text-white shadow-md"
+                  : "bg-white/60 text-gray-700 hover:bg-gray-100"
                   }`}
               >
                 {cat}

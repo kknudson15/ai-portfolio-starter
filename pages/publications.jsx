@@ -3,9 +3,8 @@ import Footer from "@/components/footer";
 import { motion } from "framer-motion";
 import { Cpu, Database, Bot, Zap, Network, Sparkles } from "lucide-react";
 import SEO from '@/components/SEO';
-import dynamic from 'next/dynamic';
-
-const NeuralNetwork3D = dynamic(() => import('@/components/NeuralNetwork3D'), { ssr: false });
+import Link from 'next/link'; /* Added Link import if needed or just remove unused imports */
+/* NeuralNetwork3D removed */
 
 const publications = [
   {
@@ -66,14 +65,13 @@ const publications = [
 
 export default function Publications() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-slate-50 dark:bg-[#0f172a]">
+    <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
       <SEO
         title="Publications"
         description="Technical articles and insights on AI, Data Engineering, and Enterprise Systems by Kyle Knudson."
       />
       <Nav />
       <div className="noise-overlay" />
-      <NeuralNetwork3D />
 
       <section className="w-full max-w-6xl px-6 py-32 z-10">
         <motion.div
