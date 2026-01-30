@@ -12,7 +12,7 @@ export const apps = [
     id: 'app-two',
     name: 'ArtVault: Digital Heirloom',
     description: 'From fridge art to fine art. ArtVault is the immersive museum for everyone. Organize your creative journey and share your private gallery with the world.',
-    appStoreUrl: 'https://apps.apple.com/app/id987654321',
+    appStoreUrl: 'https://apps.apple.com/us/app/artvault-digital-heirloom/id6757687423',
     supportUrl: '/support?app=app-two',
     privacyUrl: '/privacy?app=app-two',
     icon: '/images/ArtVaultIcon.png',
@@ -25,5 +25,14 @@ export const apps = [
     supportUrl: '/support?app=app-three',
     privacyUrl: '/privacy?app=app-three',
     icon: '/images/project2.png', // Placeholder icon
-  }
+  },
+  {
+    id: 'app-four',
+    name: 'Hus',
+    description: 'Family Command Center for your home',
+    appStoreUrl: 'https://apps.apple.com/app/id987654321',
+    supportUrl: '/support?app=app-four',
+    privacyUrl: '/privacy?app=app-four',
+    icon: '/images/project2.png', // Placeholder icon
+  },
 ];
