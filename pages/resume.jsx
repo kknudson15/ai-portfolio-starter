@@ -1,5 +1,5 @@
 // pages/resume.jsx
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Nav from '@/components/Nav';
 import Footer from '@/components/footer';
 import { Cloud, Cpu, Code2, Briefcase, GraduationCap, Award, ChevronRight } from 'lucide-react';
@@ -106,21 +106,14 @@ function TimelineItem({ item, index, isLast }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="relative pl-12 pb-12"
-    >
+    <div className="relative pl-12 pb-12">
       {/* Timeline line */}
       {!isLast && (
         <div className="absolute left-[15px] top-10 w-0.5 h-full bg-slate-300 dark:bg-white/10" />
       )}
 
       {/* Timeline dot */}
-      <motion.div
-        whileHover={{ scale: 1.2 }}
+      <div
         className={`absolute left-0 top-1 w-8 h-8 rounded-full flex items-center justify-center z-10 ${item.type === 'current'
           ? 'bg-blue-500 shadow-lg shadow-blue-500/50'
           : 'bg-slate-300 dark:bg-slate-700'
@@ -128,12 +121,14 @@ function TimelineItem({ item, index, isLast }) {
       >
         <div className={`w-3 h-3 rounded-full ${item.type === 'current' ? 'bg-white' : 'bg-slate-400'
           }`} />
-      </motion.div>
+      </div>
 
       {/* Content card */}
       <motion.div
-        whileHover={{ scale: 1.01, x: 5 }}
-        transition={{ type: 'spring', stiffness: 300 }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
         onClick={() => setIsExpanded(!isExpanded)}
         className="bg-white/60 dark:bg-slate-800/40 backdrop-blur-xl rounded-[2rem] shadow-2xl p-8 cursor-pointer hover:border-blue-500/50 border border-white/20 dark:border-white/10 transition-all duration-300"
       >
@@ -149,38 +144,37 @@ function TimelineItem({ item, index, isLast }) {
               {item.company}
             </p>
           </div>
-          <motion.div
-            animate={{ rotate: isExpanded ? 90 : 0 }}
-            transition={{ duration: 0.2 }}
-          >
+          <div className={`transform transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}>
             <ChevronRight className="w-6 h-6 text-slate-400" />
-          </motion.div>
+          </div>
         </div>
 
         {/* Expandable highlights */}
-        <motion.div
-          initial={false}
-          animate={{ height: isExpanded ? 'auto' : 0, opacity: isExpanded ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="overflow-hidden"
-        >
-          <ul className="mt-6 space-y-4">
-            {item.highlights.map((highlight, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: isExpanded ? 1 : 0, x: isExpanded ? 0 : -10 }}
-                transition={{ delay: i * 0.1 }}
-                className="text-lg text-slate-600 dark:text-slate-400 flex items-start gap-3"
-              >
-                <span className="text-blue-500 mt-1.5">•</span>
-                {highlight}
-              </motion.li>
-            ))}
-          </ul>
-        </motion.div>
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+            >
+              <ul className="mt-6 space-y-4">
+                {item.highlights.map((highlight, i) => (
+                  <li
+                    key={i}
+                    className="text-lg text-slate-600 dark:text-slate-400 flex items-start gap-3"
+                  >
+                    <span className="text-blue-500 mt-1.5">•</span>
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
 

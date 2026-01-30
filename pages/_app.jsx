@@ -36,6 +36,8 @@ const pageVariants = {
   },
 };
 
+import ErrorBoundary from '@/components/ErrorBoundary';
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
@@ -44,17 +46,19 @@ function MyApp({ Component, pageProps }) {
       <div className={`${outfit.variable} ${inter.variable} font-sans`}>
         <SEO />
         <NeuralNetwork3D />
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={router.asPath}
-            variants={pageVariants}
-            initial="initial"
-            animate="enter"
-            exit="exit"
-          >
-            <Component {...pageProps} />
-          </motion.div>
-        </AnimatePresence>
+        <ErrorBoundary>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={router.asPath}
+              variants={pageVariants}
+              initial="initial"
+              animate="enter"
+              exit="exit"
+            >
+              <Component {...pageProps} />
+            </motion.div>
+          </AnimatePresence>
+        </ErrorBoundary>
         <ChatWidget />
       </div>
     </ThemeProvider>
