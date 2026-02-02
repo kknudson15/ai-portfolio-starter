@@ -1,7 +1,6 @@
-import Nav from "@/components/Nav";
-import Footer from "@/components/footer";
-import { motion } from "framer-motion";
-import { Cpu, Database, Bot, Zap, Network, Sparkles } from "lucide-react";
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { ExternalLink, BookOpen, ScrollText, Zap, Database, Bot, Cpu, Network, Sparkles } from 'lucide-react';
 import SEO from '@/components/SEO';
 import Link from 'next/link'; /* Added Link import if needed or just remove unused imports */
 /* NeuralNetwork3D removed */
@@ -70,7 +69,6 @@ export default function Publications() {
         title="Publications"
         description="Technical articles and insights on AI, Data Engineering, and Enterprise Systems by Kyle Knudson."
       />
-      <Nav />
       <div className="noise-overlay" />
 
       <section className="w-full max-w-6xl px-6 py-32 z-10">
@@ -123,8 +121,6 @@ export default function Publications() {
           ))}
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

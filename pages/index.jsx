@@ -1,12 +1,11 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import SEO from '@/components/SEO';
-import Nav from '@/components/Nav';
-import Footer from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { useState, useRef, useEffect } from 'react';
 import knowledgeBase from '@/data/knowledgeBase';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import Image from 'next/image';
 import Avatar from '@/components/ui/Avatar';
 import { ExternalLink } from 'lucide-react';
 import Tilt from 'react-parallax-tilt';
@@ -47,9 +46,6 @@ export default function Home() {
       <SEO />
       <div className="noise-overlay" />
 
-      {/* Nav */}
-      <Nav />
-
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center min-h-[90vh] pt-32 px-6 z-10 relative">
         <motion.div
@@ -58,7 +54,7 @@ export default function Home() {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="mb-8 relative"
         >
-          <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-20 blur-xl" />
+          <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 blur-xl" />
           <span className="relative inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-sm font-medium text-blue-600 dark:text-blue-300">
             ✨ Available for new projects
           </span>
@@ -120,8 +116,8 @@ export default function Home() {
           className="glass rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden"
         >
           {/* Decorative gradients */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -z-10" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl -z-10" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/0 rounded-full blur-3xl -z-10" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/0 rounded-full blur-3xl -z-10" />
 
           <div className="grid md:grid-cols-3 gap-12 items-center">
             {/* Photo Placeholder */}
@@ -205,13 +201,18 @@ export default function Home() {
                 className="group spotlight-card rounded-3xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 cursor-pointer h-full flex flex-col hover:shadow-2xl transition-shadow duration-500"
               >
                 <div className="h-64 bg-slate-100 dark:bg-slate-900/50 overflow-hidden relative rounded-t-3xl">
-                  <motion.img
+                  <motion.div
                     layoutId={`project-image-${project.id}`}
-                    src={project.image}
-                    alt={project.title}
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    loading="lazy"
-                  />
+                    className="h-full w-full"
+                  >
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </motion.div>
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                 </div>
 
@@ -354,8 +355,6 @@ export default function Home() {
           </motion.div>
         </div>
       )}
-
-      <Footer />
     </main>
   );
 }

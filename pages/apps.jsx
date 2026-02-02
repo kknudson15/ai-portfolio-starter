@@ -1,6 +1,4 @@
 import { motion } from 'framer-motion';
-import Nav from '@/components/Nav';
-import Footer from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { apps } from '@/data/apps';
 import { useRouter } from 'next/router';
@@ -10,7 +8,6 @@ export default function AppsPage() {
 
     return (
         <main className="min-h-screen flex flex-col transition-colors duration-500 relative overflow-hidden">
-            <Nav />
             <div className="noise-overlay" />
 
             <section className="flex-grow flex flex-col items-center pt-32 pb-24 px-6 z-10">
@@ -73,8 +70,6 @@ export default function AppsPage() {
                     ))}
                 </div>
             </section>
-
-            <Footer />
         </main>
     );
 }

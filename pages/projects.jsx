@@ -1,9 +1,8 @@
 // pages/projects.jsx
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Nav from "@/components/Nav";
-import Footer from "@/components/footer";
 import Link from "next/link";
+import Image from "next/image";
 import knowledgeBase from "../data/knowledgeBase";
 
 const projects = knowledgeBase.projects;
@@ -32,7 +31,6 @@ export default function Projects() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
-      <Nav />
 
       {/* Background - Removed explicit gradient to let global neural network show, or keep if intended. 
           The user wanted neural network everywhere. 
@@ -81,11 +79,15 @@ export default function Projects() {
                   className="backdrop-blur-lg bg-white/70 rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:scale-[1.02] transition cursor-pointer flex flex-col"
                   onClick={() => setSelectedProject(project)}
                 >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="rounded-lg mb-4 object-cover h-56 w-full"
-                  />
+                  <div className="relative h-56 w-full mb-4">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="rounded-lg object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </div>
                   <h3 className="text-2xl font-semibold mb-2">
                     {project.title}
                   </h3>
@@ -138,11 +140,15 @@ export default function Projects() {
               className="backdrop-blur-lg bg-white/60 rounded-2xl shadow-md p-4 hover:shadow-xl hover:scale-[1.02] transition transform cursor-pointer flex flex-col"
               onClick={() => setSelectedProject(project)}
             >
-              <img
-                src={project.image}
-                alt={project.title}
-                className="rounded-lg mb-4 object-cover h-40 w-full"
-              />
+              <div className="relative h-40 w-full mb-4">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="rounded-lg object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
               <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
               <p className="text-gray-600 line-clamp-3 mb-2">
                 {project.description}
@@ -180,11 +186,14 @@ export default function Projects() {
             <h3 className="text-2xl font-bold mb-4">
               {selectedProject.title}
             </h3>
-            <img
-              src={selectedProject.image}
-              alt={selectedProject.title}
-              className="mb-4 rounded-lg w-full object-cover"
-            />
+            <div className="relative w-full h-64 sm:h-80 mb-4">
+              <Image
+                src={selectedProject.image}
+                alt={selectedProject.title}
+                fill
+                className="rounded-lg object-cover"
+              />
+            </div>
             <p className="text-gray-700 mb-4">
               {selectedProject.description}
             </p>
@@ -209,7 +218,6 @@ export default function Projects() {
         </div>
       )}
 
-      <Footer />
     </main>
   );
 }

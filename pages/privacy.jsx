@@ -1,6 +1,4 @@
 import { motion } from 'framer-motion';
-import Nav from '@/components/Nav';
-import Footer from '@/components/footer';
 import { apps } from '@/data/apps';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
@@ -26,7 +24,6 @@ export default function PrivacyPage() {
                 title="Privacy Policy"
                 description="Privacy information for apps built by Kyle Knudson."
             />
-            <Nav />
             <div className="noise-overlay" />
 
             <section className="flex-grow flex flex-col items-center pt-32 pb-24 px-6 z-10">
@@ -105,8 +102,6 @@ export default function PrivacyPage() {
                     )}
                 </div>
             </section>
-
-            <Footer />
         </main>
     );
 }

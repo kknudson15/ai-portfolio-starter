@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     // Enable image optimization
-    unoptimized: false,
+    unoptimized: true,
     // Allow local images
     remotePatterns: [],
     // Supported formats

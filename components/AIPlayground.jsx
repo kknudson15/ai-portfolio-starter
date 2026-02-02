@@ -78,7 +78,7 @@ export default function AIPlayground() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-3xl p-8 shadow-2xl"
+                    className="bg-white/50 dark:bg-slate-800/30 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-3xl p-8 shadow-2xl"
                 >
                     <div className="space-y-4">
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">

@@ -1,7 +1,5 @@
 // pages/resume.jsx
 import { motion, AnimatePresence } from 'framer-motion';
-import Nav from '@/components/Nav';
-import Footer from '@/components/footer';
 import { Cloud, Cpu, Code2, Briefcase, GraduationCap, Award, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import SEO from '@/components/SEO';
@@ -185,7 +183,6 @@ export default function Resume() {
         title="Resume"
         description="Experience and skills of Kyle Knudson - Data Engineering Leader specialized in AI."
       />
-      <Nav />
       <div className="noise-overlay" />
 
       <section className="w-full max-w-5xl px-6 py-32 z-10 space-y-24">
@@ -390,7 +387,6 @@ export default function Resume() {
         </div>
       </section>
 
-      <Footer />
     </main>
   );
 }

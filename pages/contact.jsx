@@ -1,6 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import Nav from '@/components/Nav';
-import Footer from '@/components/footer';
+import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { Send, CheckCircle, AlertCircle, Loader2, Mail, User, MessageSquare } from 'lucide-react';
 import SEO from '@/components/SEO';
@@ -61,7 +60,6 @@ export default function Contact() {
         title="Contact"
         description="Get in touch with Kyle Knudson for collaboration or inquiries."
       />
-      <Nav />
       <div className="noise-overlay" />
 
       <section className="w-full max-w-5xl px-6 py-32 z-10 flex flex-col items-center">
@@ -202,8 +200,6 @@ export default function Contact() {
           </motion.div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

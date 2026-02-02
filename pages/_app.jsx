@@ -1,6 +1,5 @@
 import ChatWidget from '@/components/ChatWidget';
 import { ThemeProvider } from '@/lib/ThemeContext';
-import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import '@/styles/globals.css';
 import SEO from '@/components/SEO';
@@ -38,27 +37,24 @@ const pageVariants = {
 
 import ErrorBoundary from '@/components/ErrorBoundary';
 
+import Nav from '@/components/Nav';
+import Footer from '@/components/footer';
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   return (
     <ThemeProvider>
-      <div className={`${outfit.variable} ${inter.variable} font-sans`}>
+      <div className={`${outfit.variable} ${inter.variable} font-sans min-h-screen flex flex-col`}>
         <SEO />
         <NeuralNetwork3D />
+        <Nav />
         <ErrorBoundary>
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={router.asPath}
-              variants={pageVariants}
-              initial="initial"
-              animate="enter"
-              exit="exit"
-            >
-              <Component {...pageProps} />
-            </motion.div>
-          </AnimatePresence>
+          <div className="flex-grow">
+            <Component {...pageProps} />
+          </div>
         </ErrorBoundary>
+        <Footer />
         <ChatWidget />
       </div>
     </ThemeProvider>
