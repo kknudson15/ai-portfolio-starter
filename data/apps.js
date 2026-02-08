@@ -35,4 +35,13 @@ export const apps = [
     privacyUrl: '/privacy?app=app-four',
     icon: '/images/project2.png', // Placeholder icon
   },
+  {
+    id: 'app-five',
+    name: 'WallFlower',
+    description: 'Measure, Track, Celebrate',
+    appStoreUrl: 'https://apps.apple.com/app/id987654321',
+    supportUrl: '/support?app=app-five',
+    privacyUrl: '/privacy?app=app-five',
+    icon: '/images/project2.png', // Placeholder icon
+  },
 ];
