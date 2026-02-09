@@ -42,6 +42,6 @@ export const apps = [
     appStoreUrl: 'https://apps.apple.com/app/id987654321',
     supportUrl: '/support?app=app-five',
     privacyUrl: '/privacy?app=app-five',
-    icon: '/images/project2.png', // Placeholder icon
+    icon: '/images/WallFlowerIcon.png', // Placeholder icon
   },
 ];
