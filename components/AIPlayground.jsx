@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, Sparkles, Brain, CheckCircle, AlertTriangle } from 'lucide-react';
 
-const MODEL_LOAD_TIMEOUT_MS = 60_000; // 60 seconds
+const MODEL_NAME = 'Xenova/distilbert-base-uncased-finetuned-sst-2-english';
+const MODEL_LOAD_TIMEOUT_MS = 90_000; // 90 seconds
 
 export default function AIPlayground() {
     const [input, setInput] = useState('');
@@ -10,82 +11,85 @@ export default function AIPlayground() {
     const [loading, setLoading] = useState(false);
     const [ready, setReady] = useState(false);
     const [error, setError] = useState(null);
-    const [progress, setProgress] = useState(null);
-    const workerRef = useRef(null);
-    const timeoutRef = useRef(null);
+    const [progressPct, setProgressPct] = useState(null);
+    const classifierRef = useRef(null);
+    const readyRef = useRef(false);
 
-    // Initialize Web Worker for AI
+    // Load the model directly (no web worker)
     useEffect(() => {
-        if (!workerRef.current) {
+        let cancelled = false;
+        let timeoutId = null;
+
+        const loadModel = async () => {
             try {
-                // Create a web worker to run the model off the main thread
-                workerRef.current = new Worker(new URL('../lib/ai-worker.js', import.meta.url));
+                // Dynamically import to keep the bundle small for other pages
+                const { pipeline } = await import('@huggingface/transformers');
 
-                workerRef.current.onerror = (err) => {
-                    console.error("Worker connection failed:", err);
-                    setError('Failed to initialize AI worker. Your browser may not support this feature.');
-                    setLoading(false);
-                    clearTimeout(timeoutRef.current);
-                };
+                if (cancelled) return;
 
-                workerRef.current.onmessage = (event) => {
-                    const { status, output, error: workerError, progress: workerProgress } = event.data;
-                    if (status === 'ready') {
-                        setReady(true);
-                        setLoading(false);
-                        setError(null);
-                        setProgress(null);
-                        clearTimeout(timeoutRef.current);
-                    } else if (status === 'progress') {
-                        // Show download progress
-                        if (workerProgress?.progress != null && workerProgress?.file) {
-                            setProgress(workerProgress);
-                        }
-                    } else if (status === 'complete') {
-                        setResult(output);
-                        setLoading(false);
-                    } else if (status === 'error') {
-                        console.error('AI Worker error:', workerError);
-                        setError(workerError || 'An unexpected error occurred.');
-                        setLoading(false);
-                        clearTimeout(timeoutRef.current);
-                    }
-                };
-
-                // Set a timeout so the spinner doesn't run forever
-                timeoutRef.current = setTimeout(() => {
-                    if (!ready) {
-                        setError('Model loading timed out. This may be due to a slow connection or browser restrictions. Try refreshing the page.');
+                // Set a timeout so users aren't left hanging
+                timeoutId = setTimeout(() => {
+                    if (!readyRef.current && !cancelled) {
+                        setError('Model loading timed out. This may be due to a slow connection. Try refreshing.');
                         setLoading(false);
                     }
                 }, MODEL_LOAD_TIMEOUT_MS);
 
-                // Trigger load
-                workerRef.current.postMessage({ type: 'load' });
-            } catch (err) {
-                console.error("Failed to initialize worker:", err);
-                setError('Failed to start the AI engine. Your browser may not support Web Workers.');
+                const classifier = await pipeline('text-classification', MODEL_NAME, {
+                    device: 'wasm',
+                    progress_callback: (progress) => {
+                        if (cancelled) return;
+                        if (progress?.progress != null) {
+                            setProgressPct(Math.round(progress.progress));
+                        }
+                    },
+                });
+
+                if (cancelled) return;
+
+                classifierRef.current = classifier;
+                readyRef.current = true;
+                setReady(true);
+                setProgressPct(null);
+                setError(null);
+                clearTimeout(timeoutId);
+            } catch (e) {
+                if (cancelled) return;
+                console.error('Failed to load AI model:', e);
+                setError(`Failed to load model: ${e.message}`);
+                clearTimeout(timeoutId);
             }
-        }
+        };
+
+        loadModel();
 
         return () => {
-            clearTimeout(timeoutRef.current);
-            workerRef.current?.terminate();
+            cancelled = true;
+            clearTimeout(timeoutId);
         };
     }, []);
 
-    const analyze = () => {
-        if (!input.trim()) return;
+    const analyze = useCallback(async () => {
+        if (!input.trim() || !classifierRef.current) return;
         setLoading(true);
         setResult(null);
-        workerRef.current.postMessage({ type: 'classify', text: input });
-    };
+        try {
+            const output = await classifierRef.current(input);
+            setResult(output);
+        } catch (e) {
+            console.error('Classification error:', e);
+            setError(`Analysis failed: ${e.message}`);
+        } finally {
+            setLoading(false);
+        }
+    }, [input]);
 
     const getStatusIndicator = () => {
         if (error) {
             return (
                 <span className="text-xs text-amber-600 dark:text-amber-400 flex items-center gap-2">
-                    <AlertTriangle className="w-3 h-3" /> {error}
+                    <AlertTriangle className="w-3 h-3 flex-shrink-0" />
+                    <span className="truncate">{error}</span>
                 </span>
             );
         }
@@ -96,13 +100,12 @@ export default function AIPlayground() {
                 </span>
             );
         }
-        // Loading state with progress
-        const progressText = progress?.progress != null
-            ? `Downloading... ${Math.round(progress.progress)}%`
+        const label = progressPct != null
+            ? `Downloading... ${progressPct}%`
             : 'Loading Model...';
         return (
             <span className="text-xs text-slate-500 flex items-center gap-2">
-                <Loader2 className="w-3 h-3 animate-spin" /> {progressText}
+                <Loader2 className="w-3 h-3 animate-spin" /> {label}
             </span>
         );
     };
