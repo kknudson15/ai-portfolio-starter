@@ -1,13 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, Sparkles, Brain, CheckCircle } from 'lucide-react';
+import { Loader2, Sparkles, Brain, CheckCircle, AlertTriangle } from 'lucide-react';
+
+const MODEL_LOAD_TIMEOUT_MS = 60_000; // 60 seconds
 
 export default function AIPlayground() {
     const [input, setInput] = useState('');
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
     const [ready, setReady] = useState(false);
+    const [error, setError] = useState(null);
+    const [progress, setProgress] = useState(null);
     const workerRef = useRef(null);
+    const timeoutRef = useRef(null);
 
     // Initialize Web Worker for AI
     useEffect(() => {
@@ -18,31 +23,53 @@ export default function AIPlayground() {
 
                 workerRef.current.onerror = (err) => {
                     console.error("Worker connection failed:", err);
+                    setError('Failed to initialize AI worker. Your browser may not support this feature.');
                     setLoading(false);
+                    clearTimeout(timeoutRef.current);
                 };
 
                 workerRef.current.onmessage = (event) => {
-                    const { status, output, error: workerError } = event.data;
+                    const { status, output, error: workerError, progress: workerProgress } = event.data;
                     if (status === 'ready') {
                         setReady(true);
                         setLoading(false);
+                        setError(null);
+                        setProgress(null);
+                        clearTimeout(timeoutRef.current);
+                    } else if (status === 'progress') {
+                        // Show download progress
+                        if (workerProgress?.progress != null && workerProgress?.file) {
+                            setProgress(workerProgress);
+                        }
                     } else if (status === 'complete') {
                         setResult(output);
                         setLoading(false);
                     } else if (status === 'error') {
                         console.error('AI Worker error:', workerError);
+                        setError(workerError || 'An unexpected error occurred.');
                         setLoading(false);
+                        clearTimeout(timeoutRef.current);
                     }
                 };
+
+                // Set a timeout so the spinner doesn't run forever
+                timeoutRef.current = setTimeout(() => {
+                    if (!ready) {
+                        setError('Model loading timed out. This may be due to a slow connection or browser restrictions. Try refreshing the page.');
+                        setLoading(false);
+                    }
+                }, MODEL_LOAD_TIMEOUT_MS);
 
                 // Trigger load
                 workerRef.current.postMessage({ type: 'load' });
             } catch (err) {
                 console.error("Failed to initialize worker:", err);
+                setError('Failed to start the AI engine. Your browser may not support Web Workers.');
             }
         }
 
         return () => {
+            clearTimeout(timeoutRef.current);
             workerRef.current?.terminate();
         };
     }, []);
@@ -52,6 +79,32 @@ export default function AIPlayground() {
         setLoading(true);
         setResult(null);
         workerRef.current.postMessage({ type: 'classify', text: input });
+    };
+
+    const getStatusIndicator = () => {
+        if (error) {
+            return (
+                <span className="text-xs text-amber-600 dark:text-amber-400 flex items-center gap-2">
+                    <AlertTriangle className="w-3 h-3" /> {error}
+                </span>
+            );
+        }
+        if (ready) {
+            return (
+                <span className="text-xs text-green-600 dark:text-green-400 flex items-center gap-2">
+                    <CheckCircle className="w-3 h-3" /> Model Ready
+                </span>
+            );
+        }
+        // Loading state with progress
+        const progressText = progress?.progress != null
+            ? `Downloading... ${Math.round(progress.progress)}%`
+            : 'Loading Model...';
+        return (
+            <span className="text-xs text-slate-500 flex items-center gap-2">
+                <Loader2 className="w-3 h-3 animate-spin" /> {progressText}
+            </span>
+        );
     };
 
     return (
@@ -91,16 +144,8 @@ export default function AIPlayground() {
                                 placeholder="Type something here (e.g., 'I absolutely loved this project, it was amazing!')"
                                 className="w-full h-32 p-4 rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-[#0071e3] transition-all resize-none text-slate-900 dark:text-white placeholder:text-slate-400"
                             />
-                            <div className="absolute bottom-4 right-4">
-                                {!ready ? (
-                                    <span className="text-xs text-slate-500 flex items-center gap-2">
-                                        <Loader2 className="w-3 h-3 animate-spin" /> Loading Model...
-                                    </span>
-                                ) : (
-                                    <span className="text-xs text-green-600 dark:text-green-400 flex items-center gap-2">
-                                        <CheckCircle className="w-3 h-3" /> Model Ready
-                                    </span>
-                                )}
+                            <div className="absolute bottom-4 right-4 max-w-[60%] text-right">
+                                {getStatusIndicator()}
                             </div>
                         </div>
 
